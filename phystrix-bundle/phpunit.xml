@@ -1,0 +1,18 @@
+<phpunit bootstrap = "./vendor/autoload.php" >
+    <testsuites>
+        <testsuite name="OdeskPhystrixBundle Test Suite">
+            <directory>./Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./</directory>
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+</phpunit>

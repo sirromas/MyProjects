@@ -1,0 +1,30 @@
+{
+    "name": "odesk/phystrix-bundle",
+    "type": "symfony-bundle",
+    "license": "proprietary",
+    "keywords": [ "odesk", "phystrix", "symfony" ],
+    "autoload": {
+        "psr-4": { "Odesk\\Bundle\\PhystrixBundle\\": "" }
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "type": "git",
+            "url": "http://stash.odesk.com/scm/agora/agora-phystrix.git"
+        },
+        {
+            "type": "composer",
+            "url": "http://satis.odesk.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.5.3",
+        "odesk/phystrix": "dev-master@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.2"
+    }
+}

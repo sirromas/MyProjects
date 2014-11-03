@@ -1,0 +1,60 @@
+parameters:
+  phystrix.configuration.class: Zend\Config\Config
+  phystrix.service_locator.class: Zend\Di\ServiceLocator
+  phystrix.state_storage.class: Odesk\Phystrix\ArrayStateStorage
+  phystrix.circuit_breaker_factory.class: Odesk\Phystrix\CircuitBreakerFactory
+  phystrix.command_metrics_factory.class: Odesk\Phystrix\CommandMetricsFactory
+  phystrix.request_cache.class: Odesk\Phystrix\RequestCache
+  phystrix.request_log.class: Odesk\Phystrix\RequestLog
+  phystrix.command_factory.class: Odesk\Phystrix\CommandFactory
+
+  phystrix.data_collector.class: Odesk\Bundle\PhystrixBundle\DataCollector\RequestLogDataCollector
+
+  phystrix.configuration.data: ~ # set by extension
+
+services:
+
+  phystrix.configuration:
+    class: %phystrix.configuration.class%
+    public: false
+    arguments:
+      - %phystrix.configuration.data%
+
+  phystrix.service_locator:
+    class: %phystrix.service_locator.class%
+
+  phystrix.state_storage:
+    class: %phystrix.state_storage.class%
+
+  phystrix.circuit_breaker_factory:
+    class: %phystrix.circuit_breaker_factory.class%
+    arguments:
+      - @phystrix.state_storage
+
+  phystrix.command_metrics_factory:
+    class: %phystrix.command_metrics_factory.class%
+    arguments:
+      - @phystrix.state_storage
+
+  phystrix.request_cache:
+    class: %phystrix.request_cache.class%
+
+  phystrix.request_log:
+    class: %phystrix.request_log.class%
+
+  phystrix.command_factory:
+    class: %phystrix.command_factory.class%
+    arguments:
+      - @phystrix.configuration
+      - @phystrix.service_locator
+      - @phystrix.circuit_breaker_factory
+      - @phystrix.command_metrics_factory
+      - @phystrix.request_cache
+      - @phystrix.request_log
+
+  phystrix.data_collector:
+    class: %phystrix.data_collector.class%
+    arguments:
+      - @phystrix.request_log
+    tags:
+      - { name: data_collector, template: "OdeskPhystrixBundle:Collector:phystrix", id: "phystrix"}
